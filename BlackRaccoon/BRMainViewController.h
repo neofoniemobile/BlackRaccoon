@@ -28,7 +28,6 @@
 #import "BRRequestCreateDirectory.h"
 #import "BRRequestUpload.h"
 #import "BRRequestDownload.h"
-#import "BRRequestDelete.h"
 #import "BRRequest+_UserData.h"
 #import "BRButtonController.h"
 
@@ -83,12 +82,10 @@
 @interface BRMainViewController : UIViewController <BRRequestDelegate, BRButtonControllerProtocol>
 {
     BRRequestCreateDirectory *createDir;
-    BRRequestDelete * deleteDir;
     BRRequestListDirectory *listDir;
     
     BRRequestDownload * downloadFile;
     BRRequestUpload *uploadFile;
-    BRRequestDelete *deleteFile;
     
     __weak IBOutlet UITextField *host;
     __weak IBOutlet UITextField *path;
@@ -104,11 +101,9 @@
 }
 
 - (void) createDirectory;
-- (void) deleteDirectory;
 - (void) listDirectory;
 - (void) downloadFile;
 - (void) uploadFile;
-- (void) deleteFile;
 - (void) cancelAction;
 
 
