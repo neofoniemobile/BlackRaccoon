@@ -33,11 +33,9 @@ enum enunButtons
 {
     eButtonGetFile,
     eButtonPutFile,
-    eButtonDeleteFile,
+    eButtonCancelAction,
     eButtonMakeDirectory,
-    eButtonListDirectory,
-    eButtonDeleteDirectory,
-    eButtonCancelAction
+    eButtonListDirectory
 };
 
 
@@ -207,20 +205,12 @@ enum enunButtons
             [self uploadFile];
             break;
             
-        case eButtonDeleteFile:
-            [self deleteFile];
-            break;
-            
         case eButtonMakeDirectory:
             [self createDirectory];
             break;
             
         case eButtonListDirectory:
             [self listDirectory];
-            break;
-            
-        case eButtonDeleteDirectory:
-            [self deleteDirectory];
             break;
             
         case eButtonCancelAction:
@@ -260,34 +250,6 @@ enum enunButtons
     
     [createDir start];
 }
-
-
-
-//-----
-//
-//				deleteDirectory
-//
-// synopsis:	[self deleteDirectory];
-//
-// description:	deleteDirectory is designed to
-//
-// errors:		none
-//
-// returns:		none
-//
-
-- (void) deleteDirectory
-{
-    deleteDir = [[BRRequestDelete alloc] initWithDelegate:self];
-        
-    deleteDir.hostname = host.text;
-    deleteDir.path = path.text;
-    deleteDir.username = username.text;
-    deleteDir.password = password.text;
-    
-    [deleteDir start];
-}
-
 
 
 //-----
@@ -373,33 +335,6 @@ enum enunButtons
     
     [uploadFile start];
 }
-
-
-
-//-----
-//
-//				deleteFile
-//
-// synopsis:	[self deleteFile];
-//
-// description:	deleteFile is designed to
-//
-// errors:		none
-//
-// returns:		none
-//
-
-- (void) deleteFile
-{
-    deleteFile = [[BRRequestDelete alloc] initWithDelegate:self];
-    deleteFile.hostname = host.text;
-    deleteFile.path = path.text;
-    deleteFile.username = username.text;
-    deleteFile.password = password.text;
-    
-    [deleteFile start];
-}
-
 
 
 //-----
@@ -599,13 +534,6 @@ enum enunButtons
         createDir = nil;
     }
     
-    if (request == deleteDir)
-    {
-        NSLog(@"%@ completed!", request);
-        
-        deleteDir = nil;
-    }
-    
     if (request == listDir)
     {
         //called after 'request' is completed successfully
@@ -649,12 +577,6 @@ enum enunButtons
         uploadFile = nil;
     }
     
-    if (request == deleteFile)
-    {
-        NSLog(@"%@ completed!", request);
-        deleteFile = nil;
-    }
-    
 }
 
 
@@ -681,14 +603,7 @@ enum enunButtons
         
         createDir = nil;
     }
-    
-    if (request == deleteDir)
-    {
-        NSLog(@"%@", request.error.message);
-        
-        deleteDir = nil;
-    }
-    
+
     if (request == listDir)
     {
         logview.text = [NSString stringWithFormat: @"%@\n\nList Dir Failed with %@", logview.text, request.error.message];
@@ -712,12 +627,6 @@ enum enunButtons
         NSLog(@"%@", request.error.message);
         
         uploadFile = nil;
-    }
-    
-    if (request == deleteFile)
-    {
-        NSLog(@"%@", request.error.message);
-        deleteFile = nil;
     }
 }
 
